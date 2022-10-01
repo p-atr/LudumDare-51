@@ -1,4 +1,0 @@
-repository "Ludum Dare 51@Timbaleek@cloud"
-  path "/"
-    br "/main"
-    co "/main"
