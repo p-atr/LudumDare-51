@@ -7,6 +7,8 @@ public class Move : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    private Animator anim;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,7 @@ public class Move : MonoBehaviour
         //transform.GetChild(0).RotateAround(Vector3.zero, -transform.right, rotateVertical);
         //transform.GetChild(0).eulerAngles = new Vector3(transform.GetChild(0).eulerAngles.x + rotateVertical, transform.GetChild(0).eulerAngles.y + rotateHorizontal, 0);
 
-        rb.velocity = new Vector3(0,rb.velocity.y,0);
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
         //if(Input.GetKey(KeyCode.W))
         //{
         //    rb.velocity += new Vector3(transform.forward.normalized.x, 0, transform.forward.normalized.z);
@@ -57,5 +59,14 @@ public class Move : MonoBehaviour
             rb.velocity += Vector3.right;
         }
         rb.velocity = new Vector3(rb.velocity.x * speed, rb.velocity.y, rb.velocity.z * speed);
+        //change to walk animation
+        if (rb.velocity.magnitude != 0f)
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 }
