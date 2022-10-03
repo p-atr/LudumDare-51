@@ -25,48 +25,55 @@ public class Move : MonoBehaviour
         //transform.GetChild(0).RotateAround(Vector3.zero, -transform.right, rotateVertical);
         //transform.GetChild(0).eulerAngles = new Vector3(transform.GetChild(0).eulerAngles.x + rotateVertical, transform.GetChild(0).eulerAngles.y + rotateHorizontal, 0);
 
-        rb.velocity = new Vector3(0, rb.velocity.y, 0);
-        //if(Input.GetKey(KeyCode.W))
-        //{
-        //    rb.velocity += new Vector3(transform.forward.normalized.x, 0, transform.forward.normalized.z);
-        //}
-        //if(Input.GetKey(KeyCode.A))
-        //{
-        //    rb.velocity -= new Vector3(transform.right.normalized.x, 0, transform.right.normalized.z);
-        //}
-        //if (Input.GetKey(KeyCode.S))
-        //{
-        //    rb.velocity -= new Vector3(transform.forward.normalized.x, 0, transform.forward.normalized.z);
-        //}
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    rb.velocity -= new Vector3(transform.right.normalized.x, 0, transform.right.normalized.z);
-        //}
+
+
+    }
+
+    private void FixedUpdate()
+    {
+
+    }
+    private void LateUpdate()
+    {
+        Vector3 move = new Vector3();
+        //Debug.Log(rb.velocity.y);
+        //rb.velocity = new Vector3(0, rb.velocity.y, 0);
         if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity += Vector3.forward;
+            move += Vector3.forward;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.velocity += Vector3.left;
+            move += Vector3.left;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.velocity += Vector3.back;
+            move += Vector3.back;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.velocity += Vector3.right;
+            move += Vector3.right;
         }
-        rb.velocity = new Vector3(rb.velocity.x * speed, rb.velocity.y, rb.velocity.z * speed);
+        move = move.normalized * speed;
+        rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
         //change to walk animation
-        if (rb.velocity.magnitude != 0f)
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
         {
-            anim.SetBool("isWalking", true);
+            if (Vector3.Angle(transform.forward, rb.velocity) > 90)
+            {
+                anim.SetBool("Backwards", true);
+                anim.SetBool("Forward", false);
+            }
+            else
+            {
+                anim.SetBool("Backwards", false);
+                anim.SetBool("Forward", true);
+            }
         }
         else
         {
-            anim.SetBool("isWalking", false);
+            anim.SetBool("Backwards", false);
+            anim.SetBool("Forward", false);
         }
     }
 }

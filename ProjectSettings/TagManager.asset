@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Point
   - Enemy
-  - Item
   layers:
   - Default
   - TransparentFX
@@ -16,8 +15,8 @@ TagManager:
   - UI
   - Coin
   - Player
-  - 
-  - 
+  - PostProcess
+  - FOCKIN SHOT
   - 
   - 
   - 
